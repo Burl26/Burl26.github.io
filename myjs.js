@@ -27,9 +27,11 @@
         }
 document.addEventListener('touchstart', handleTouchStart, false);        
 document.addEventListener('touchmove', handleTouchMove, false);
+document.addEventListener('touchend', handleTouchEnd, false);
 
 var xDown = null;                                                        
 var yDown = null;
+var touched = null;
 
 function getTouches(evt) {
   return evt.touches;             // browser API
@@ -39,13 +41,20 @@ function getTouches(evt) {
 function handleTouchStart(evt) {
     const firstTouch = getTouches(evt)[0];                                      
     xDown = firstTouch.clientX;                                      
-    yDown = firstTouch.clientY;                                      
+    yDown = firstTouch.clientY;
+    touched = 1;
 };                                                
 
 function handleTouchMove(evt) {
-    if ( ! xDown || ! yDown ) {
-        return;
-    }
+    
+}
+
+function handleTouchEnd(evt) {
+    if (! touched) return;
+    
+//    if ( ! xDown || ! yDown ) {
+//        return;
+//    }
 
     var xUp = evt.touches[0].clientX;                                    
     var yUp = evt.touches[0].clientY;
@@ -70,5 +79,6 @@ function handleTouchMove(evt) {
     }
     /* reset values */
     xDown = null;
-    yDown = null;                                             
+    yDown = null;   
+    touched = null;
 };
