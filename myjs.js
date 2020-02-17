@@ -41,7 +41,9 @@ function getTouches(evt) {
 }                                                     
 
 function handleTouchStart(evt) {
-    const firstTouch = getTouches(evt)[0];                                      
+    const firstTouch = getTouches(evt)[0];   
+    // ignore touches that start in nav area
+    if (xDown < 230) return;
     xDown = firstTouch.clientX;                                      
     yDown = firstTouch.clientY;
     xUp = xDown;
@@ -68,10 +70,10 @@ function handleTouchEnd(evt) {
     var yDiff = yDown - yUp;
 
     if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
-        if ( xDiff > 20 ) {
+        if ( xDiff > 50 ) {
             /* left swipe with de-glitch */ 
             NextImage(1);
-        } else  if (xDiff < -20 ){
+        } else  if (xDiff < -50 ){
             /* right swipe with de-glitch */
            NextImage(-1);
         }                       
@@ -82,7 +84,7 @@ function handleTouchEnd(evt) {
             /* down swipe */
 //        }                                                                 
     }
-    document.getElementById('logo').innerHTML = 'xDown: ' + xDown + 'Xup: ' + xUp;
+    //document.getElementById('logo').innerHTML = 'xDown: ' + xDown + 'Xup: ' + xUp;
     /* reset values */
         xDown = null;
         yDown = null;
