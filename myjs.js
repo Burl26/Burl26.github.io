@@ -31,6 +31,8 @@ document.addEventListener('touchend', handleTouchEnd, false);
 
 var xDown = null;                                                        
 var yDown = null;
+var xUp = null;                                                        
+var yUp = null;
 var touched = null;
 
 function getTouches(evt) {
@@ -42,32 +44,35 @@ function handleTouchStart(evt) {
     const firstTouch = getTouches(evt)[0];                                      
     xDown = firstTouch.clientX;                                      
     yDown = firstTouch.clientY;
-    touched = 1;
+    xUp = xDown;
+    yUp = yDown;
 };                                                
 
 function handleTouchMove(evt) {
-    
+    // track finger movement
+    xUp = evt.touches[0].clientX;                                    
+    yUp = evt.touches[0].clientY;    
 }
 
 function handleTouchEnd(evt) {
-    if (! touched) return;
-    
-//    if ( ! xDown || ! yDown ) {
-//        return;
-//    }
-
-    var xUp = evt.originalEvent.touches[0].clientX;                                    
-    var yUp = evt.originalEvent.touches[0].clientY;
+    if ( !xDown || !xUp  || !yUp || !yDown) {
+        // abort the whole swipe
+        xDown = null;
+        yDown = null;
+        xUp = null;
+        yUp = null;
+        return;
+    }
 
     var xDiff = xDown - xUp;
     var yDiff = yDown - yUp;
 
     if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
-        if ( xDiff > 0 ) {
-            /* left swipe */ 
+        if ( xDiff > 20 ) {
+            /* left swipe with de-glitch */ 
             NextImage(1);
-        } else {
-            /* right swipe */
+        } else  if (xDiff < -20 ){
+            /* right swipe with de-glitch */
            NextImage(-1);
         }                       
 //   } else {
@@ -79,8 +84,8 @@ function handleTouchEnd(evt) {
     }
     document.getElementById('logo').innerHTML = 'xDown: ' + xDown + 'Xup: ' + xUp;
     /* reset values */
-    xDown = null;
-    yDown = null;   
-    touched = null;
-
+        xDown = null;
+        yDown = null;
+        xUp = null;
+        yUp = null;
 };
