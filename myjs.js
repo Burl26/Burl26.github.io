@@ -43,7 +43,7 @@ function getTouches(evt) {
 function handleTouchStart(evt) {
     const firstTouch = getTouches(evt)[0];   
     // ignore touches that start in nav area
-    if (xDown < 230) return;
+    if (firstTouch.clientX < 230) return;
     xDown = firstTouch.clientX;                                      
     yDown = firstTouch.clientY;
     xUp = xDown;
