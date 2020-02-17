@@ -77,8 +77,11 @@ function handleTouchEnd(evt) {
             /* down swipe */
 //        }                                                                 
     }
+    var altcap = document.getElementById(n).getAttribute('alt');
+    document.getElementById('logo').innerHTML = 'xDown: ' + xDown + 'Xup: ' + xUp;
     /* reset values */
     xDown = null;
     yDown = null;   
     touched = null;
+
 };
