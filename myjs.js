@@ -56,8 +56,8 @@ function handleTouchEnd(evt) {
 //        return;
 //    }
 
-    var xUp = evt.touches[0].clientX;                                    
-    var yUp = evt.touches[0].clientY;
+    var xUp = evt.originalEvent.touches[0].clientX;                                    
+    var yUp = evt.originalEvent.touches[0].clientY;
 
     var xDiff = xDown - xUp;
     var yDiff = yDown - yUp;
