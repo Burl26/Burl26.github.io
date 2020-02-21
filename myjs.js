@@ -6,12 +6,24 @@
             currentimageID = n;
            // get the thumbnail source
            var thumbsource = document.getElementById(n).getAttribute('src');
-           thumbsource = thumbsource.replace("_T.jpg", "_W.jpg");
-           thumbsource = thumbsource.replace("thumbnails", "webimages");
-            document.getElementById('currentpic').setAttribute('src', thumbsource);
+           // if source contains (V), it is a video
+           if (thumbsource.indexOf("(V)") > 0) {
+               // create the video file
+               var videofile = thumbsource.replace("_T.jpg",".mp4");
+               videofile = videofile.replace("thumbnails", "webimages");
+               document.getElementById("innerframe").innerHTML = "<video id='currentvid' width='320' height='240' controls autoplay> <source src='" + videofile + "' type='video/mp4'>Your browser does not support the video tag.</video>";
+               
+            } else {
+                    thumbsource = thumbsource.replace("_T.jpg", "_W.jpg");
+                    thumbsource = thumbsource.replace("thumbnails", "webimages");
+                    
+                    document.getElementById("innerframe").innerHTML = "<img id='currentpic' src='" + thumbsource + "' alt='no photo'>";
+                    //document.getElementById('currentpic').setAttribute('src', thumbsource);
+           }
             // put the alt text into the caption
             var altcap = document.getElementById(n).getAttribute('alt');
             document.getElementById('logo').innerHTML = altcap;
+            
         }
         function InitImages(n){
             maximages = n;
